@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-vcan
+  namespace: default
+  labels:
+    app: consumer-vcan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer-vcan
+  template:
+    metadata:
+      labels:
+        app: consumer-vcan
+    spec:
+      containers:
+      - name: consumer-vcan
+        image: mpreu/consumer-vcan:latest
+        imagePullPolicy: Never
+        command: [ "sleep" ]
+        args: [ "infinity" ]
+        resources:
+          limits:
+            socketcan.mpreu.de/vcan: 1
+
+
+

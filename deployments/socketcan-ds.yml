@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: k8s-device-plugin-socketcan
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: k8s-device-plugin-socketcan
+  template:
+    metadata:
+      labels:
+        name: k8s-device-plugin-socketcan
+    spec:
+      priorityClassName: system-node-critical
+      hostNetwork: true
+      hostPID: true
+      containers:
+      - image: mpreu/k8s-device-plugin-socketcan:latest
+        args: ["-v", "3", "-logtostderr"]
+        imagePullPolicy: IfNotPresent
+        name: k8s-device-plugin-socketcan
+        securityContext:
+          privileged: true
+          capabilities:
+            drop: ["ALL"]
+        resources:
+        volumeMounts:
+          - name: var-run
+            mountPath: /var/run
+          - name: device-plugin
+            mountPath: /var/lib/kubelet/device-plugins
+      volumes:
+        - name: var-run
+          hostPath:
+            path: /var/run
+        - name: device-plugin
+          hostPath:
+            path: /var/lib/kubelet/device-plugins
+  updateStrategy:
+    type: RollingUpdate
