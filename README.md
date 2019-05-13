@@ -29,7 +29,7 @@ make remove-ds
 ```
 
 ## Usage of the device plugin
-The device plugin is available through the namespace `socketcan.mpreu.de/vcan`. An example deployment is given under [example/consumer-vcan](./example/consumer-vcan/ds.yml).
+The device plugin is available through the namespace `socketcan.mpreu.de/vcan`. An example deployment is given under [example/consumer-vcan](./example/consumer-vcan/dc.yml).
 
 ## Dependencies on the Host
 To be able to consume the `SocketCAN` devices the corresponding kernel modules must be available on the Kubernetes compute nodes. The kernel modules should be already provided by the distributions, one known exception at the time of writing are RHEL 7.0-7.2 (https://access.redhat.com/solutions/2259931)
